@@ -27,4 +27,10 @@ public class feedBack {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String display() {
+		String output = "";
+		output += String.format("%-10s %-30s %-10s", customerName, message, status);
+		
+		return output;
+	}
 }
