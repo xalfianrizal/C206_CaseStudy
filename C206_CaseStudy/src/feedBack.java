@@ -1,13 +1,21 @@
 
 public class feedBack {
+	private int feedBackID;
 	private String customerName;
 	private String message;
 	private String status;
 	
-	public feedBack(String customerName,String message) {
+	public feedBack(int feedBackID,String customerName,String message) {
+		this.feedBackID = feedBackID;
 		this.customerName = customerName;
 		this.message = message;
 		this.status = "Pending";
+	}
+	public int getFeedBackID() {
+		return feedBackID;
+	}
+	public void setFeedBackID(int feedBackID) {
+		this.feedBackID = feedBackID;
 	}
 	public String getCustomerName() {
 		return customerName;
@@ -29,7 +37,7 @@ public class feedBack {
 	}
 	public String display() {
 		String output = "";
-		output += String.format("%-10s %-30s %-10s", customerName, message, status);
+		output += String.format("%-10s %-10s %-30s %-10s", feedBackID, customerName, message, status);
 		
 		return output;
 	}
