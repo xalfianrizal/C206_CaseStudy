@@ -56,7 +56,7 @@ public class appointment {
 
 	public String display() {
 		String output = "";
-		output += String.format("%-10s %-10s %-20s %-10s %-10s", appointmentID, customerName, date, time, status);
+		output += String.format("%-10d %-10s %-20s %-10s %-10s", appointmentID, customerName, date, time, status);
 
 		return output;
 	}
