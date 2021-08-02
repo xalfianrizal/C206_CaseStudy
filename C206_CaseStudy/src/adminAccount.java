@@ -1,11 +1,21 @@
 
 public class adminAccount {
+	private int adminAccountID;
 	private String loginName;
 	private String password;
 
-	public adminAccount(String loginName, String password) {
+	public adminAccount(int adminAccountID,String loginName, String password) {
+		this.adminAccountID = adminAccountID;
 		this.loginName = loginName;
 		this.password = password;
+	}
+
+	public int getAdminAccountID() {
+		return adminAccountID;
+	}
+
+	public void setAdminAccountID(int adminAccountID) {
+		this.adminAccountID = adminAccountID;
 	}
 
 	public String getLoginName() {
