@@ -58,9 +58,10 @@ public class C206_CaseStudy {
 					System.out.println("Successfully Exited the Application");
 				}
 				else {
-					System.out.println("Invalid Option!");
+					System.out.println("Invalid option!");
 				}
 			}
+			
 		}
 		else {
 			System.out.println("Wrong Login Name or/and Password");
