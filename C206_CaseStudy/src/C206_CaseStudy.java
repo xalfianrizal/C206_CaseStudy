@@ -190,14 +190,16 @@ public class C206_CaseStudy {
 	}
 
 	//Appointment Feature
-	public static void showAppointmentMenu() {
-		Helper.line(30, "=");
-		System.out.println("APPOINTMENT MENU");
-		Helper.line(30, "=");
-		System.out.println("1. Add appointment");
-		System.out.println("2. Delete appointment");
-		System.out.println("3. View appointment");
-		System.out.println("4. Exit\n");
+	public static String showAppointmentMenu() {
+		String output = "";
+		output += "==============================\n";
+		output += "APPOINTMENT MENU\n";
+		output += "==============================\n";
+		output += "1. Add appointment\n";
+		output += "2. Delete appointment\n";
+		output += "3. View appointment\n";
+		output += "4. Exit\n";
+		return output;
 	}
 
 	public static boolean checkAppointmentIDExists(int appID) {
@@ -350,7 +352,7 @@ public class C206_CaseStudy {
 	public static void appointmentMenu() {
 		int option = 0;
 		while (option != 4) {
-			showAppointmentMenu();
+			System.out.println(showAppointmentMenu());
 			option = Helper.readInt("Enter an option > ");
 
 			if (option == 1) {

@@ -23,6 +23,39 @@ public class C206_CaseStudyTest {
 	
 	@Test
 	public void testViewAppointmentMenu() {
+		String menu = "";
+		menu += "==============================\n";
+		menu += "APPOINTMENT MENU\n";
+		menu += "==============================\n";
+		menu += "1. Add appointment\n";
+		menu += "2. Delete appointment\n";
+		menu += "3. View appointment\n";
+		menu += "4. Exit\n";
+		//Test Normal | Test that both outputs are the same
+		String appointmentMenu = C206_CaseStudy.showAppointmentMenu();
+		assertEquals("Check that both menu are the same output", menu, appointmentMenu);
+		
+		//Test Error | Test that if one is not the same it is false
+		String menu2 = "";
+		menu2 += "==============================\n";
+		menu2 += "APPOINTMENT MENU\n";
+		menu2 += "==============================\n";
+		menu2 += "1. Add appointment\n";
+		menu2 += "2. Delete appointment\n";
+		menu2 += "3. View appointment\n";
+		assertNotEquals("Check that both menu are not the same output", menu2, appointmentMenu);
+		
+		//Test Error | Test that if we add another output, the menu is not the same.
+		String menu3 = "";
+		menu3 += "==============================\n";
+		menu3 += "APPOINTMENT MENU\n";
+		menu3 += "==============================\n";
+		menu3 += "1. Add appointment\n";
+		menu3 += "2. Delete appointment\n";
+		menu3 += "3. View appointment\n";
+		menu3 += "4. Edit appointment\n";
+		menu3 += "5. Exit\n";
+		assertNotEquals("Check that both menu are not the same output", menu3, appointmentMenu);
 		
 	}
 	
