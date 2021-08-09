@@ -26,24 +26,6 @@ public class C206_CaseStudy {
 		feedBackList.add(new feedBack(2, "Eunice", "Some parts are broken"));
 
 		adminAccountList.add(new adminAccount(1, "admin", "admin123")); // Name/Password Use this to login to system
-
-		
-		buyerList.add(new buyer(1,"Adam",85658898));
-		buyerList.add(new buyer(2,"Bryan",97765571));
-		
-		radioControlCarList.add(new radioControlCar(1,"Monster Truck","aluminum","Brushless",10.47,29.92));
-		radioControlCarList.add(new radioControlCar(2,"Xray","Graphite","T-brace",9.89,28.72));
-		
-		radioControlCarPartList.add(new radioControlCarPart(1,"Wheel","Mountain"));
-		radioControlCarPartList.add(new radioControlCarPart(2,"Body Part","SuperLight"));
-		
-		appointmentList.add(new appointment(1,"Charles","23-Aug-2021","3.00PM"));
-		appointmentList.add(new appointment(2,"Dillon","20-Aug-2021","12.30PM"));
-		
-		feedBackList.add(new feedBack(1,"Filip","Some parts are missing"));
-		feedBackList.add(new feedBack(2,"Eunice","Some parts are broken"));
-		
-		adminAccountList.add(new adminAccount(1,"admin","admin123")); // Name/Password Use this to login to system
 		
 		int option = 0;
 		Helper.line(30, "=");
@@ -273,17 +255,55 @@ public class C206_CaseStudy {
 		System.out.println("DELETE APPOINTMENT");
 		Helper.line(30, "-");
 		
-		String output = String.format("%s %-15s %-10s %s", "APPOINTMENT ID", "CUSTOMER NAME", "DATE", "TIME");
-		String name = Helper.readString("Enter customer name to view possible appointments > ");
-		for (int i = 0; i < appointmentList.size(); i++) {
-			if (appointmentList.get(i).getCustomerName().equalsIgnoreCase(name)) {
+		checkCustomerName();
+		
+		int appointmentID = Helper.readInt("Enter the appointment ID to delete > ");
+		char confirm = Helper.readChar("Confirm to delete appointment ID: " + appointmentID + " ? (Y/N)");
+		
+		if (confirm == 'Y' || confirm == 'y') {
+			for (int i = 0; i < appointmentList.size(); i++) {
+				appointment appointment = appointmentList.get(i);
+				if (appointment.getAppointmentID() == appointmentID) {
+					appointmentList.remove(i);
+				}
 			}
+			System.out.println("Delete complete!");
 		}
+		
+		else if (confirm == 'N' || confirm == 'n') {
+			System.out.println("Delete cancelled!");
+		}
+		
+		else {
+			System.out.println("Failed to confirm, delete failed!");
+		}
+		
 		
 	}
 
-	public static void viewAppointment() {
+	private static void checkCustomerName() {
+		String output = String.format("%-15s %-15s %-15s %s\n", "APPOINTMENT ID", "CUSTOMER NAME", "DATE", "TIME");
+		String name = Helper.readString("Enter customer name to view possible appointments > ");
+		for (int i = 0; i < appointmentList.size(); i++) {
+			appointment appointment = appointmentList.get(i);
+			if (appointment.getCustomerName().equalsIgnoreCase(name)) {
+				output += String.format("%-15d %-15s %-15s %s\n", appointment.getAppointmentID(), appointment.getCustomerName(), appointment.getDate(), appointment.getTime());
+			}
+		}
+		System.out.println(output);
+	}
 
+	public static void viewAppointment() {
+		Helper.line(30, "-");
+		System.out.println("VIEW APPOINTMENT");
+		Helper.line(30, "-");
+		
+		String output = String.format("%-15s %-15s %-15s %s\n", "APPOINTMENT ID", "CUSTOMER NAME", "DATE", "TIME");
+		for (int i = 0; i < appointmentList.size(); i++) {
+			appointment appointment = appointmentList.get(i);
+			output += String.format("%-15d %-15s %-15s %s\n", appointment.getAppointmentID(), appointment.getCustomerName(), appointment.getDate(), appointment.getTime());
+		}
+		System.out.println(output);
 	}
 
 	public static void appointmentMenu() {
