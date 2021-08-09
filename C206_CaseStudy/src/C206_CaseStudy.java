@@ -189,7 +189,7 @@ public class C206_CaseStudy {
 		}
 	}
 
-	// Appointment Side
+	//Appointment Feature
 	public static void showAppointmentMenu() {
 		Helper.line(30, "=");
 		System.out.println("APPOINTMENT MENU");
@@ -254,36 +254,40 @@ public class C206_CaseStudy {
 		Helper.line(30, "-");
 		System.out.println("DELETE APPOINTMENT");
 		Helper.line(30, "-");
+		String name = Helper.readString("Enter name of the customer to delete appointment > ");
 		
-		checkCustomerName();
-		
-		int appointmentID = Helper.readInt("Enter the appointment ID to delete > ");
-		char confirm = Helper.readChar("Confirm to delete appointment ID: " + appointmentID + " ? (Y/N)");
-		
-		if (confirm == 'Y' || confirm == 'y') {
-			for (int i = 0; i < appointmentList.size(); i++) {
-				appointment appointment = appointmentList.get(i);
-				if (appointment.getAppointmentID() == appointmentID) {
-					appointmentList.remove(i);
+		if (checkCustomerNameExist(name) == true) {
+			displaySearch(name);
+			int appointmentID = Helper.readInt("Enter the appointment ID to delete > ");
+			char confirm = Helper.readChar("Confirm to delete appointment ID: " + appointmentID + " ? (Y/N)");
+			
+			if (confirm == 'Y' || confirm == 'y') {
+				for (int i = 0; i < appointmentList.size(); i++) {
+					appointment appointment = appointmentList.get(i);
+					if (appointment.getAppointmentID() == appointmentID) {
+						appointmentList.remove(i);
+					}
 				}
+				System.out.println("Delete complete!");
 			}
-			System.out.println("Delete complete!");
+			
+			else if (confirm == 'N' || confirm == 'n') {
+				System.out.println("Delete cancelled!");
+			}
+			
+			else {
+				System.out.println("Failed to confirm, delete failed!");
+			}
 		}
 		
-		else if (confirm == 'N' || confirm == 'n') {
-			System.out.println("Delete cancelled!");
+		else if (!checkCustomerNameExist(name)) {
+			System.out.println("Name does not exist in the records!");
 		}
-		
-		else {
-			System.out.println("Failed to confirm, delete failed!");
-		}
-		
 		
 	}
-
-	private static void checkCustomerName() {
+	
+	public static void displaySearch(String name) {
 		String output = String.format("%-15s %-15s %-15s %s\n", "APPOINTMENT ID", "CUSTOMER NAME", "DATE", "TIME");
-		String name = Helper.readString("Enter customer name to view possible appointments > ");
 		for (int i = 0; i < appointmentList.size(); i++) {
 			appointment appointment = appointmentList.get(i);
 			if (appointment.getCustomerName().equalsIgnoreCase(name)) {
@@ -291,6 +295,18 @@ public class C206_CaseStudy {
 			}
 		}
 		System.out.println(output);
+	}
+		
+
+	private static boolean checkCustomerNameExist(String name) {
+		boolean check = false;
+		for (int i = 0; i < appointmentList.size(); i++) {
+			appointment appointment = appointmentList.get(i);
+			if (appointment.getCustomerName().equalsIgnoreCase(name)) {
+				check = true;
+			}
+		}
+		return check;
 	}
 
 	public static void viewAppointment() {
@@ -336,7 +352,7 @@ public class C206_CaseStudy {
 
 	}
 	
-	//
+	//End of Appointment Feature
 
 	public static void feedBackMenu() {
 
