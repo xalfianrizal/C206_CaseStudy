@@ -283,6 +283,14 @@ public class C206_CaseStudy {
 			if (option == 1) {
 				addAppointment();
 			}
+			
+			else if (option == 2) {
+				deleteAppointment();
+			}
+			
+			else if (option == 3) {
+				viewAppointment();
+			}
 
 			else if (option == 4) {
 				System.out.println("Returning to application menu...\n");
