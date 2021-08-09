@@ -56,25 +56,19 @@ public class C206_CaseStudy {
 				option = Helper.readInt("Enter an option > ");
 				if (option == 1) {
 					buyerMenu();
-				} else if (option == 2) {
 				}
 				else if(option == 2) {
 					radioControlCarMenu();
-				} else if (option == 3) {
-					radioControlCarPartsMenu();
-				} else if (option == 4) {
-				}
+				} 
 				else if(option == 3) {
 					radioControlCarPartMenu();
 				}
 				else if(option == 4) {
-
 					appointmentMenu();
+					
 				} else if (option == 5) {
 					feedBackMenu();
-				} else if (option == 6) {
-					System.out.println("Successfully exited!");
-				} 
+				}
 				else if(option == 6) {
 					System.out.println("Successfully Exited the Application");
 				}
@@ -274,6 +268,24 @@ public class C206_CaseStudy {
 		}
 	}
 
+	public static void deleteAppointment() {
+		Helper.line(30, "-");
+		System.out.println("DELETE APPOINTMENT");
+		Helper.line(30, "-");
+		
+		String output = String.format("%s %-15s %-10s %s", "APPOINTMENT ID", "CUSTOMER NAME", "DATE", "TIME");
+		String name = Helper.readString("Enter customer name to view possible appointments > ");
+		for (int i = 0; i < appointmentList.size(); i++) {
+			if (appointmentList.get(i).getCustomerName().equalsIgnoreCase(name)) {
+			}
+		}
+		
+	}
+
+	public static void viewAppointment() {
+
+	}
+
 	public static void appointmentMenu() {
 		int option = 0;
 		while (option != 4) {
@@ -301,14 +313,6 @@ public class C206_CaseStudy {
 			}
 
 		}
-
-	}
-
-	public static void deleteAppointment() {
-
-	}
-
-	public static void viewAppointment() {
 
 	}
 	
