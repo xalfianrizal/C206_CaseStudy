@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class C206_CaseStudy {
 	
-	private static final int QUIT = 5; //Change when done
+	private static final int QUIT = 6; //Change when done
 	
 	private static final ArrayList<buyer> buyerList = new ArrayList<buyer>();
 	private static final ArrayList<radioControlCar> radioControlCarList = new ArrayList<radioControlCar>();
@@ -42,18 +42,22 @@ public class C206_CaseStudy {
 					radioControlCarMenu();
 				}
 				else if(option == 3) {
-					appointmentMenu();
+					radioControlCarPartsMenu();
 				}
 				else if(option == 4) {
-					feedBackMenu();
+					appointmentMenu();
 				}
 				else if(option == 5) {
-					System.out.println("Successfully Exited");
+					feedBackMenu();
+				}
+				else if(option == 6) {
+					System.out.println("Successfully exited!");
 				}
 				else {
-					System.out.println("Invalid Option!");
+					System.out.println("Invalid option!");
 				}
 			}
+			
 		}
 		else {
 			System.out.println("Wrong Login Name or/and Password");
@@ -80,16 +84,21 @@ public class C206_CaseStudy {
 		Helper.line(30, "=");
 		System.out.println("Welcome to the Application");
 		Helper.line(30, "=");
-		System.out.println("1. Add/View/Delete (Buyer)");
-		System.out.println("2. Add/Delete/View (Radio control car)");
-		System.out.println("3. Add/Delete/View (Appointment)");
-		System.out.println("4. Add/Delete/View (feedback)");
-		System.out.println("5. Quit");
+		System.out.println("1. Buyer Menu");
+		System.out.println("2. Radio Control Car Menu");
+		System.out.println("3. Radio Control Car Parts Menu");
+		System.out.println("4. Appointment Menu");
+		System.out.println("5. Feedback Menu");
+		System.out.println("6. Quit");
 	}
 	public static void buyerMenu() {
 		
 	}
 	public static void radioControlCarMenu() {
+		
+	}
+	
+	public static void radioControlCarPartsMenu() {
 		
 	}
 	public static void appointmentMenu() {
