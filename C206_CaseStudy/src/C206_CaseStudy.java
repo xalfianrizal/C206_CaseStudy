@@ -221,6 +221,11 @@ public class C206_CaseStudy {
 		return check;
 
 	}
+	
+	public static void doAddAppointment(ArrayList<appointment> appointmentList, appointment app) {
+		appointmentList.add(app);
+		System.out.println("\nThe appointment has been added successfully!");
+	}
 
 	public static void addAppointment() {
 		Helper.line(30, "-");
@@ -245,9 +250,21 @@ public class C206_CaseStudy {
 		}
 
 		else {
-			appointmentList.add(new appointment(appointmentID, customerName, date, time));
-			System.out.println("\nThe appointment has been added successfully!");
+			appointment app = new appointment(appointmentID, customerName, date, time);
+			doAddAppointment(appointmentList, app);
 		}
+	}
+	
+	public static boolean doDeleteAppointment(ArrayList<appointment> appointmentList, int appID) {
+		boolean deleted = false;
+		for (int i = 0; i < appointmentList.size(); i++) {
+			appointment appointment = appointmentList.get(i);
+			if (appointment.getAppointmentID() == appID) {
+				appointmentList.remove(i);
+				deleted = true;
+			}
+		}
+		return deleted;
 	}
 
 	public static void deleteAppointment() {
@@ -261,14 +278,15 @@ public class C206_CaseStudy {
 			int appointmentID = Helper.readInt("Enter the appointment ID to delete > ");
 			char confirm = Helper.readChar("Confirm to delete appointment ID: " + appointmentID + " ? (Y/N)");
 			
+			boolean delete = doDeleteAppointment(appointmentList, appointmentID);
 			if (confirm == 'Y' || confirm == 'y') {
-				for (int i = 0; i < appointmentList.size(); i++) {
-					appointment appointment = appointmentList.get(i);
-					if (appointment.getAppointmentID() == appointmentID) {
-						appointmentList.remove(i);
-					}
+				if (delete) {
+					System.out.println("Delete complete!");
 				}
-				System.out.println("Delete complete!");
+				else {
+					System.out.println("Delete failed!");
+				}
+				
 			}
 			
 			else if (confirm == 'N' || confirm == 'n') {
@@ -308,17 +326,24 @@ public class C206_CaseStudy {
 		}
 		return check;
 	}
+	
+	public static String retrieveAppointment(ArrayList<appointment> appointmentList) {
+		String output = "";
+		for (int i = 0; i < appointmentList.size(); i++) {
+			appointment appointment = appointmentList.get(i);
+			output += String.format("%-15d %-15s %-15s %s\n", appointment.getAppointmentID(), appointment.getCustomerName(), appointment.getDate(), appointment.getTime());
+		}
+		return output;
+	}
 
-	public static void viewAppointment() {
+	public static void viewAppointment(ArrayList<appointment> appointmentList) {
 		Helper.line(30, "-");
 		System.out.println("VIEW APPOINTMENT");
 		Helper.line(30, "-");
 		
 		String output = String.format("%-15s %-15s %-15s %s\n", "APPOINTMENT ID", "CUSTOMER NAME", "DATE", "TIME");
-		for (int i = 0; i < appointmentList.size(); i++) {
-			appointment appointment = appointmentList.get(i);
-			output += String.format("%-15d %-15s %-15s %s\n", appointment.getAppointmentID(), appointment.getCustomerName(), appointment.getDate(), appointment.getTime());
-		}
+		output += retrieveAppointment(appointmentList);
+		
 		System.out.println(output);
 	}
 
@@ -337,7 +362,7 @@ public class C206_CaseStudy {
 			}
 			
 			else if (option == 3) {
-				viewAppointment();
+				viewAppointment(appointmentList);
 			}
 
 			else if (option == 4) {
