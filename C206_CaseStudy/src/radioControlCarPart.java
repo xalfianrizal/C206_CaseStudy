@@ -3,13 +3,13 @@ public class radioControlCarPart {
 	private int assetTag;
 	private String type;
 	private String description;
-	private String status;
+	private boolean isAvailable;
 	
 	public radioControlCarPart(int assetTag,String type,String description) {
 		this.assetTag = assetTag;
 		this.type = type;
 		this.description = description;
-		this.status = "Available";
+		this.isAvailable = true;
 	}
 
 	public int getAssetTag() {
@@ -36,17 +36,28 @@ public class radioControlCarPart {
 		this.description = description;
 	}
 
-	public String getStatus() {
-		return status;
+	public boolean isAvailable() {
+		return isAvailable;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
 	}
 	
+	public String showAvailability(boolean isAvailable) {
+		String avail;
+
+		if (isAvailable == true) {
+			avail = "Yes";
+		} else {
+			avail = "No";
+		}
+		return avail;
+	}
+
 	public String display() {
 		String output = "";
-		output += String.format("%-10d %-10s %-20s %-10s \n" , assetTag,type,description,status);
+		output += String.format("%-10d %-10s %-20s %-10s \n" , assetTag,type,description,showAvailability(isAvailable));
 		
 		return output;
 	}
