@@ -111,9 +111,19 @@ public class C206_CaseStudy {
 		System.out.println("4. Exit\n");
 	}
 	public static void addAppointment() {
+		Helper.line(30, "-");
+		System.out.println("ADD APPOINTMENT");
+		Helper.line(30, "-");
 		
+		int appointmentID = Helper.readInt("Enter an Appointment ID > ");
+		String customerName = Helper.readString("Enter the Customers Name > ");
+		String date = Helper.readString("Enter the date (DD-MMM-YYYY) > ");
+		String time = Helper.readString("Enter the time (TT:TT(AM/PM) > ");
+		
+		appointmentList.add(new appointment(appointmentID,customerName,date,time));
+		System.out.println("\nSuccess!");
 	}
-	
+
 	public static void deleteAppointment() {
 		
 	}
@@ -128,7 +138,7 @@ public class C206_CaseStudy {
 			option = Helper.readInt("Enter an option > ");
 			
 			if (option == 1) {
-				
+				addAppointment();
 			}
 			
 			else {
