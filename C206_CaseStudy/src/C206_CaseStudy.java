@@ -31,7 +31,7 @@ public class C206_CaseStudy {
 		System.out.println("Login to access");
 		Helper.line(30, "=");
 		
-		if(valid() == true) {
+		if(valid()) {
 			while (option != QUIT) {
 				menu();
 				option = Helper.readInt("Enter an option > ");
@@ -95,15 +95,50 @@ public class C206_CaseStudy {
 		
 	}
 	public static void radioControlCarMenu() {
-		
 	}
 	
 	public static void radioControlCarPartsMenu() {
 		
 	}
-	public static void appointmentMenu() {
+	//Appointment Side
+	public static void showAppointmentMenu() {
+		Helper.line(30, "=");
+		System.out.println("APPOINTMENT MENU");
+		Helper.line(30, "=");
+		System.out.println("1. Add appointment");
+		System.out.println("2. Delete appointment");
+		System.out.println("3. View appointment");
+		System.out.println("4. Exit\n");
+	}
+	public static void addAppointment() {
 		
 	}
+	
+	public static void deleteAppointment() {
+		
+	}
+	
+	public static void viewAppointment() {
+		
+	}
+	public static void appointmentMenu() {
+		int option = 0;
+		while (option != 4) {
+			showAppointmentMenu();
+			option = Helper.readInt("Enter an option > ");
+			
+			if (option == 1) {
+				
+			}
+			
+			else {
+			System.out.println("Invalid option! Please try again!\n");
+		}
+			
+		}
+		
+	}
+	
 	public static void feedBackMenu() {
 		
 	}
