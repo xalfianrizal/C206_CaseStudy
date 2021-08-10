@@ -35,45 +35,36 @@ public class C206_CaseStudy {
 		System.out.println("Login to access");
 		Helper.line(30, "=");
 		
-		if(valid() == true) {
-			while (option != QUIT) {
-				menu();
-				option = Helper.readInt("Enter an option > ");
-				if(option == 1) {
-					buyerMenu();
-				}
-				else if(option == 2) {
-					radioControlCarMenu();
-				}
-				else if(option == 3) {
-					radioControlCarPartMenu();
-				}
-				else if(option == 4) {
-					appointmentMenu();
-				}
-				else if(option == 5) {
-					feedBackMenu();
-				}
-				else if(option == 6) {
-					System.out.println("Successfully Exited the Application");
-				}
-				else {
-					System.out.println("Invalid option!");
-				}
-			}
-			
-		}
-		else {
-			System.out.println("Wrong Login Name or/and Password");
-		}
-		
-		
-		
-		
-	}
-	public static boolean valid() {
 		String loginName = Helper.readString("Enter Login Name > ");
 		String pass = Helper.readString("Enter Password > ");
+		
+			if (valid(adminAccountList,loginName,pass) == true) {
+				while (option != QUIT) {
+					menu();
+					option = Helper.readInt("Enter an option > ");
+					if (option == 1) {
+						buyerMenu();
+					} else if (option == 2) {
+						radioControlCarMenu();
+					} else if (option == 3) {
+						radioControlCarPartOption();
+					} else if (option == 4) {
+						appointmentMenu();
+					} else if (option == 5) {
+						feedBackMenu();
+					} else if (option == 6) {
+						System.out.println("Successfully Exited the Application");
+					} else {
+						System.out.println("Invalid option!");
+					}
+				}
+			}
+			else {
+				System.out.println("Wrong Login Name or/and Password");
+			}
+
+	}
+	public static boolean valid(ArrayList<adminAccount> adminAccountList,String loginName,String pass) {
 		for(int i = 0;i < adminAccountList.size(); i++) {
 			if(adminAccountList.get(i).getLoginName().equalsIgnoreCase(loginName) && adminAccountList.get(i).getPassword().equals(pass)) {
 				return true;
@@ -102,8 +93,6 @@ public class C206_CaseStudy {
 		
 	}
 	public static void radioControlCarPartMenu() {
-		int quit = 5;
-		
 		Helper.line(30, "=");
 		System.out.println("Welcome to the Radio Control Car Part Menu");
 		Helper.line(30, "=");
@@ -112,21 +101,29 @@ public class C206_CaseStudy {
 		System.out.println("3. View Radio Control Car Part");
 		System.out.println("4. Search Radio Control Car Part");
 		System.out.println("5. Quit");
-		
-		int option = Helper.readInt("Enter an option > ");
+
+	}
+	public static void radioControlCarPartOption() {
+		int quit = 5;
+		int option = 0;
 		
 		while(option != quit) {
+			radioControlCarPartMenu();
+			option = Helper.readInt("Enter an option > ");
 			if(option == 1) {
-				addRadioControlCarPart();
+				radioControlCarPart rCCP = inputRCCPAdd();
+				C206_CaseStudy.addRadioControlCarPart(radioControlCarPartList, rCCP);
 			}
 			else if(option == 2) {
-				deleteRadioControlCarPart();
+				Integer rCCPTag = inputRCCPDelete();
+				C206_CaseStudy.deleteRadioControlCarPart(radioControlCarPartList, rCCPTag);
 			}
 			else if(option == 3) {
 				viewRadioControlCarPart();
 			}
 			else if(option == 4) {
-				searchRadioControlCarPart();
+				String rCCPType = inputRCCPSearch();
+				C206_CaseStudy.searchRadioControlCarPart(radioControlCarPartList,rCCPType);
 			}
 			else if(option == 5) {
 				System.out.println("Successfully Exited Radio Control Car Part Menu");
@@ -134,34 +131,61 @@ public class C206_CaseStudy {
 			else {
 				System.out.println("Invalid Option!");
 			}
-			option = Helper.readInt("Enter an option > ");
 		}
 		System.out.println("Successfully Exited Radio Control Car Menu");
 	}
-	public static void addRadioControlCarPart() {
-		int tag = Helper.readInt("Enter asset tag > ");
+	public static boolean checkRCCPTag(ArrayList<radioControlCarPart> radioControlCarPartList,int tag) {
+		for(int i = 0; i < radioControlCarPartList.size(); i++) {
+			if(radioControlCarPartList.get(i).getAssetTag() == tag) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public static radioControlCarPart inputRCCPAdd() {
+		String tag = Helper.readString("Enter asset tag > ");
 		String type = Helper.readString("Enter type > ");
 		String description = Helper.readString("Enter description > ");
 		
-		radioControlCarPartList.add(new radioControlCarPart(tag,type,description));
-
-	}
-	public static void deleteRadioControlCarPart() {
-		boolean deleted = false;
-		viewRadioControlCarPart();
-		int tag = Helper.readInt("Enter asset tag to delete > ");
-		for(int i = 0; i < radioControlCarPartList.size(); i++) {
-			if(radioControlCarPartList.get(i).getAssetTag() == tag) {
-				radioControlCarPartList.remove(i);
-				deleted = true;
-			}
+		if(tag.isEmpty() || type.isEmpty() || description.isEmpty()) {
+			System.out.println("Please fill in the blanks");
 		}
-		if(deleted == true) {
-			System.out.println("Asset Tag " + tag + " Successfully Deleted");
+		else if(checkRCCPTag(radioControlCarPartList,Integer.valueOf(tag)) == true) {
+			System.out.println("Asset Tag is not unique!");			
 		}
 		else {
-			System.out.println("Asset Tag " + tag + " NOT DELETED");
+			radioControlCarPart rCCP = new radioControlCarPart(Integer.valueOf(tag),type,description);
+			
+			return rCCP;
 		}
+		return null;
+	}
+	public static void addRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList,radioControlCarPart rCCP) {
+		
+		radioControlCarPartList.add(rCCP);
+		
+		System.out.println("Successfully Added");
+	}
+	public static Integer inputRCCPDelete() {
+		viewRadioControlCarPart();
+		String tag = Helper.readString("Enter asset tag to delete > ");
+		
+		if(tag.isEmpty()) {
+			System.out.println("Asset Tag is not entered.");
+		}
+		else if(checkRCCPTag(radioControlCarPartList,Integer.valueOf(tag)) == false) {
+			System.out.println("No such Asset Tag");
+		}
+		else {
+			return Integer.valueOf(tag);
+		}
+		return null;
+	}
+	public static void deleteRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList,Integer inputRCCPDelete) {
+		
+		radioControlCarPartList.remove(inputRCCPDelete - 1);
+		
+		System.out.println("Successfully Deleted");
 	}
 	public static void viewRadioControlCarPart() {
 		String output = String.format("%-10s %-20s %-20s %-10s \n", "Asset Tag","Type","Description","Available");
@@ -170,12 +194,16 @@ public class C206_CaseStudy {
 		}
 		System.out.println(output);
 	}
-	public static void searchRadioControlCarPart() {
+	public static String inputRCCPSearch() {
+		String searchType = Helper.readString("Enter the Type > ");
+		
+		return searchType;
+	}
+	public static void searchRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList,String inputRCCPSearch) {
 		boolean found = false;
 		String output = String.format("%-10s %-20s %-20s %-10s \n", "Asset Tag","Type","Description","Available");
-		String searchType = Helper.readString("Enter the Type > ");
 		for(int i = 0; i < radioControlCarPartList.size(); i++) {
-			if(radioControlCarPartList.get(i).getType().equalsIgnoreCase(searchType)) {
+			if(radioControlCarPartList.get(i).getType().equalsIgnoreCase(inputRCCPSearch)) {
 				output += radioControlCarPartList.get(i).display();
 				found = true;
 			}
