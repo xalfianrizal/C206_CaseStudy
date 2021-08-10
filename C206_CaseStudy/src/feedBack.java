@@ -37,7 +37,7 @@ public class feedBack {
 	}
 	public String display() {
 		String output = "";
-		output += String.format("%-15d %-15s %-30s %-10s", feedBackID, customerName, message, status);
+		output += String.format("%-15d %-15s %-30s %-10s\n", feedBackID, customerName, message, status);
 		
 		return output;
 	}
