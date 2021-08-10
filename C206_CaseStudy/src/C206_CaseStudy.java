@@ -483,8 +483,194 @@ public class C206_CaseStudy {
 	
 	//End of Appointment Feature
 
-	public static void feedBackMenu() {
+	public static String showFeedBackMenu() {
+		String menu = "";
+		menu += "==============================\n";
+		menu += "Feedback option menu\n";
+		menu += "==============================\n";
+		menu += "1. Add feedback\n";
+		menu += "2. Delete feedback\n";
+		menu += "3. View feedback\n";
+		menu += "4. Exit\n";
+		
+		return menu;
+	}
 
+	public static void feedBackMenu()
+	{
+		int exit = 4;
+		
+		int option = -1;
+		
+		while (option != exit)
+		{
+			System.out.println(showFeedBackMenu());
+			option = Helper.readInt("Please enter an option > ");
+			if (option == 1)
+			{
+				addFeedback();
+			}
+			
+			else if (option == 2)
+			{
+				deleteFeedback();
+			}
+			
+			else if (option == 3)
+			{
+				viewFeedback();
+			}
+			
+			else if (option == 4)
+			{
+				System.out.println("Returning to main menu...");
+			}
+			
+			else 
+			{
+				System.out.println("Invalid option!");
+			}
+		}
+	}
+
+	public static void addFeedback()
+	{
+		int feedbackID = Helper.readInt("Enter feedback ID > ");
+		String buyerName = Helper.readString("Enter name > ");
+		String feedback = Helper.readString("Enter feedback > ");
+		
+		String output = "";
+		
+		if (checkFeedbackIDExists(feedbackID) == false)
+		{
+			if (checkFeedbackNameExists(buyerName) == false)
+			{
+				if (!buyerName.isEmpty())
+				{
+					if (!feedback.isEmpty())
+					{
+						feedBack fb = new feedBack(feedbackID, buyerName, feedback);
+						doAddFeedback(feedBackList, fb);
+					}
+					
+					else
+					{
+						output = "Feedback is empty! Feedback not added!";
+					}
+				}
+				
+				else
+				{
+					output = "Name is empty! Feedback not added!";
+				}
+			}
+			
+			else
+			{
+				output = "Name already exists! Feedback not added!";
+			}
+		}
+		
+		else
+		{
+			output = "ID already exists! Feedback not added!";
+		}
+		
+		System.out.println(output);
+		feedBackMenu();
+	}
+
+	public static void doAddFeedback(ArrayList<feedBack> feedBackList, feedBack fb)
+	{
+		feedBackList.add(fb);
+		System.out.println("The feedback has been added!");
+		System.out.println("");
+	}
+
+	public static boolean checkFeedbackIDExists(int feedbackID)
+	{
+		boolean exists = false;
+		
+		for (int i = 0; i < feedBackList.size(); i++)
+		{
+			if (feedBackList.get(i).getFeedBackID() == feedbackID)
+			{
+				exists = true;
+			}
+		}
+		
+		return exists;
+	}
+
+	public static boolean checkFeedbackNameExists(String name) 
+	{
+		boolean exists = false;
+		
+		for (int i = 0; i < feedBackList.size(); i++)
+		{
+			if (feedBackList.get(i).getCustomerName().equalsIgnoreCase(name))
+			{
+				exists = true;
+			}
+		}
+		
+		return exists;
+	}
+
+	public static void deleteFeedback()
+	{
+		int id = Helper.readInt("Enter ID to delete > ");
+		for (int i = 0; i < feedBackList.size(); i++)
+		{
+			if (feedBackList.get(i).getFeedBackID() == id)
+			{
+				char delete = Helper.readChar("Are you sure you want to delete this feedback? > ");
+				
+				if (delete == 'y' || delete == 'Y')
+				{
+					doDeleteFeedback(feedBackList, id);
+				}
+			}
+			
+		}
+		feedBackMenu();
+	}
+
+	public static boolean doDeleteFeedback(ArrayList<feedBack> feedBackList, int fbdelete)
+	{
+		boolean fbdeleted = false;
+		
+		for (int i = 0; i < feedBackList.size(); i++)
+		{
+			feedBack fb = feedBackList.get(i);
+			
+			if (fb.getFeedBackID() == fbdelete)
+			{
+				feedBackList.remove(i);	
+				System.out.println("Feedback deleted!");
+				System.out.println("");
+				fbdeleted = true;
+			}
+		}
+		
+		return fbdeleted;
+	}
+
+	public static void viewFeedback() 
+	{
+		String output = doViewFeedback(feedBackList);
+		
+		System.out.println(output);
+	}
+	
+	public static String doViewFeedback(ArrayList<feedBack> feedBackList) {
+		String output = String.format("%-15s %-15s %-30s %-10s\n", "Feedback ID", "Customer Name", "Feedback", "Status");
+		for (int i = 0; i < feedBackList.size(); i++)
+		{
+			output += String.format("%-15d %-15s %-30s %-10s\n", feedBackList.get(i).getFeedBackID(), feedBackList.get(i).getCustomerName(), feedBackList.get(i).getMessage(), 
+					feedBackList.get(i).getStatus());
+		}
+		return output;
 	}
 
 }
