@@ -633,7 +633,6 @@ public class C206_CaseStudy {
 			}
 			
 		}
-		feedBackMenu();
 	}
 
 	public static boolean doDeleteFeedback(ArrayList<feedBack> feedBackList, int fbdelete)
