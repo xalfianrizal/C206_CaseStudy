@@ -20,6 +20,11 @@ public class C206_CaseStudyTest {
 	private appointment app1;
 	private appointment app2;
 	private ArrayList<appointment> appointmentList;
+	
+	//Feedback
+	private feedBack fb1;
+	private feedBack fb2;
+	private ArrayList<feedBack> feedBackList;
 
 	@Before
 	public void setUp() throws Exception {
@@ -40,6 +45,12 @@ public class C206_CaseStudyTest {
 		app1 = new appointment(1, "Charles", "23-Aug-2021", "3.00PM");
 		app2 = new appointment(2, "Dillon", "20-Aug-2021", "12.30PM");
 		appointmentList = new ArrayList<appointment>();
+		
+		//Prepare Test Data
+		//Feedback
+		fb1 = new feedBack(1, "Filip", "Some parts are missing");
+		fb2 = new feedBack(2, "Eunice", "Some parts are broken");
+		feedBackList = new ArrayList<feedBack>();
 	}
 	
 	@Test
@@ -295,6 +306,120 @@ public class C206_CaseStudyTest {
 		assertFalse("Test that only available Asset Tag can set",set);
 	}
 	
+	@Test
+	public void testViewFeedbackMenu() {
+		String menu = "";
+		menu += "==============================\n";
+		menu += "Feedback option menu\n";
+		menu += "==============================\n";
+		menu += "1. Add feedback\n";
+		menu += "2. Delete feedback\n";
+		menu += "3. View feedback\n";
+		menu += "4. Exit\n";
+		//Test that both outputs are the same - Normal
+		String feedbackmenu = C206_CaseStudy.showFeedBackMenu();
+		assertEquals("Check that both menu are the same output", menu, feedbackmenu);
+		
+		//Test that both outputs are different - Error
+		String menu2 = "";
+		menu2 += "==============================\n";
+		menu2 += "Feedback option menu\n";
+		menu2 += "==============================\n";
+		menu2 += "1. Add feedback\n";
+		menu2 += "2. Delete feedback\n";
+		menu2 += "3. View feedback\n";
+		assertNotEquals("Check that both menu are not the same output", menu2, feedbackmenu);
+				
+		//Test that both outputs are different - Error
+		String menu3 = "";
+		menu3 += "==============================\n";
+		menu3 += "Feedback option menu\n";
+		menu3 += "==============================\n";
+		menu3 += "1. Add feedback\n";
+		menu3 += "2. Delete feedback\n";
+		menu3 += "3. View feedback\n";
+		menu3 += "4. SetStatus\n";
+		menu3 += "5. Exit\n";
+		assertNotEquals("Check that both menu are not the same output", menu3, feedbackmenu);
+	}
+	
+	@Test
+	public void testDoAddFeedback()
+	{
+		//Test that feedBackList is not null so we can add in feedbacks - Boundary
+		assertNotNull("Check if there is a feedBackList so that we can add in feedbacks", feedBackList);
+		
+		C206_CaseStudy.doAddFeedback(feedBackList, fb1);
+		
+		//Test that the size of feedBackList increases to 1 after adding in fb1 - Normal
+		assertEquals("Check if the size of feedBackList increases to 1 after adding in fb1", 1, feedBackList.size());
+				
+		//Test that the feedback added is the same as the first feedback in feedBackList - Normal
+		assertSame("Check if the feedback added is the same as fb1", fb1, feedBackList.get(0));
+				
+		//Test that the size of feedBackList increases to 2 after adding in fb2 - Normal
+		C206_CaseStudy.doAddFeedback(feedBackList, fb2);
+		assertEquals("Check if the size of feedBackList increases to 2 after adding in fb2", 2, feedBackList.size());
+		
+		//Test that the feedback added is the same as the second feedback in feedBackList - Normal
+		assertSame("Check if the feedback added is the same as fb2", fb2, feedBackList.get(1));
+	}
+	
+	@Test 
+	public void testDoDeleteFeedback()
+	{
+		//Test that feedBackList is not null so we can add in feedbacks - Boundary
+		assertNotNull("Check if there is a feedBackList so that we can delete feedbacks from feedBackList", feedBackList);
+		
+		C206_CaseStudy.doAddFeedback(feedBackList, fb1);
+		C206_CaseStudy.doAddFeedback(feedBackList, fb2);
+		//Test if the first feedback can be removed - Normal
+		Boolean delete = C206_CaseStudy.doDeleteFeedback(feedBackList, fb1.getFeedBackID());
+		assertTrue("Test if the first feedback can be removed", delete);
+		
+		//Test if we can remove the same feedback - Error
+		delete = C206_CaseStudy.doDeleteFeedback(feedBackList, fb1.getFeedBackID());
+		assertFalse("Test if we can remove the same feedback", delete);
+		
+		//Test that the size of feedBackList decreases to 1 after removing the first feedback - Normal
+		assertEquals("Check that the size of feedBackList is 1 after removing the first feedback", 1, feedBackList.size());
+		
+		//Test if second feedback can be removed - Normal
+		delete = C206_CaseStudy.doDeleteFeedback(feedBackList, fb2.getFeedBackID());
+		assertTrue("Test if the second feedback can be removed", delete);
+		
+		//Test if we can remove the same feedback - Error
+		delete = C206_CaseStudy.doDeleteFeedback(feedBackList, fb2.getFeedBackID());
+		assertFalse("Test if we can remove the same feedback", delete);
+		
+		//Test that the size of feedBackList decreases to 0 after removing the second feedback - Normal
+		assertEquals("Check that the size of feedBackList is 0 after removing the first feedback", 0, feedBackList.size());
+	}
+		
+	@Test
+	public void testViewFeedback()
+	{
+		//Test that feedBackList is not null so we can view feedbacks in feedBackList - Boundary
+		assertNotNull("Check if there is a feedBackList so that we can add in feedbacks", feedBackList);
+		
+		C206_CaseStudy.doAddFeedback(feedBackList, fb1);
+		//Check if size of feedBackList is 1 after adding in the first feedback
+		assertEquals("Check if the size of feedBackList is 1 after adding in the first feedback", 1, feedBackList.size());
+		
+		C206_CaseStudy.doAddFeedback(feedBackList, fb2);
+		//Check if size of feedBackList is 2 after adding in the first feedback
+		assertEquals("Check if the size of feedBackList is 2 after adding in the second feedback", 2, feedBackList.size());
+		
+		//Test Normal | Test if that the two outputs are the same once adding the two objects.
+		String feedback = C206_CaseStudy.doViewFeedback(feedBackList);
+				
+		String emptyfeedback = String.format("%-15s %-15s %-30s %-10s\n", "Feedback ID", "Customer Name", "Feedback", "Status");
+		emptyfeedback += fb1.display();
+		emptyfeedback += fb2.display();
+		
+		assertEquals("Check that both outputs are the same", emptyfeedback, feedback);
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		//Appointment
@@ -308,6 +433,10 @@ public class C206_CaseStudyTest {
 		//Admin
 		aA1 = null;
 		adminAccountList = null;
+		//Feedback
+		fb1 = null;
+		fb2 = null;
+		feedBackList = null;
 		
 	}
 	
