@@ -145,7 +145,6 @@ public class C206_CaseStudy {
 				System.out.println("Invalid Option!");
 			}
 		}
-		System.out.println("Successfully Exited Radio Control Car Menu");
 	}
 	public static boolean checkRCCPTag(ArrayList<radioControlCarPart> radioControlCarPartList,int tag) {
 		for(int i = 0; i < radioControlCarPartList.size(); i++) {
