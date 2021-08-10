@@ -57,7 +57,7 @@ public class radioControlCarPart {
 
 	public String display() {
 		String output = "";
-		output += String.format("%-10s %-20s %-20s %-10s \n" , assetTag,type,description,showAvailability(isAvailable));
+		output += String.format("%-10d %-20s %-20s %-10s \n" , assetTag,type,description,showAvailability(isAvailable));
 		
 		return output;
 	}
