@@ -113,7 +113,7 @@ public class C206_CaseStudy {
 		return output;
 	}
 	public static void radioControlCarPartOption() {
-		int quit = 5;
+		int quit = 6;
 		int option = 0;
 		
 		while(option != quit) {
@@ -124,7 +124,7 @@ public class C206_CaseStudy {
 				C206_CaseStudy.addRadioControlCarPart(radioControlCarPartList, rCCP);
 			}
 			else if(option == 2) {
-				Integer rCCPTag = inputRCCPDelete();
+				int rCCPTag = inputRCCPDelete();
 				C206_CaseStudy.deleteRadioControlCarPart(radioControlCarPartList, rCCPTag);
 			}
 			else if(option == 3) {
@@ -135,6 +135,10 @@ public class C206_CaseStudy {
 				C206_CaseStudy.searchRadioControlCarPart(radioControlCarPartList,rCCPType);
 			}
 			else if(option == 5) {
+				int rCCPSet = inputRCCPSet();
+				C206_CaseStudy.setRadioControlCarPart(radioControlCarPartList, rCCPSet);
+			}
+			else if(option == 6) {
 				System.out.println("Successfully Exited Radio Control Car Part Menu");
 			}
 			else {
