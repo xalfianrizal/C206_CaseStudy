@@ -19,7 +19,7 @@ public class C206_CaseStudy {
 		radioControlCarList.add(new radioControlCar(1, "Monster Truck", "aluminum", "Brushless", 10.47, 29.92));
 		radioControlCarList.add(new radioControlCar(2, "Xray", "Graphite", "T-brace", 9.89, 28.72));
 		
-		radioControlCarPartList.add(new radioControlCarPart(1,"Wheel","Mountain Wheel"));
+		radioControlCarPartList.add(new radioControlCarPart(1,"Wheel","Mountain"));
 		radioControlCarPartList.add(new radioControlCarPart(2,"Body Part","SuperLight"));
 
 		appointmentList.add(new appointment(1, "Charles", "23-Aug-2021", "3.00PM"));
@@ -97,6 +97,20 @@ public class C206_CaseStudy {
 	public static void radioControlCarPartsMenu() {
 
 		
+	}
+	public static adminAccount inputAdmin() {
+		int iD = Helper.readInt("Enter an ID > ");
+		String username = Helper.readString("Enter an username > ");
+		String pass = Helper.readString("Enter password > ");
+		adminAccount aA = new adminAccount(iD,username,pass);
+		
+		return aA;
+	}
+	public static boolean addAdmin(ArrayList<adminAccount> adminAccountList, adminAccount inputAdmin) {
+		adminAccountList.add(inputAdmin);
+		System.out.println("Successfully added");
+		
+		return true;
 	}
 	public static String radioControlCarPartMenu() {
 		String output = "";
@@ -194,12 +208,20 @@ public class C206_CaseStudy {
 		return null;
 	}
 	public static boolean deleteRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList,Integer inputRCCPDelete) {
-		
-		radioControlCarPartList.remove(inputRCCPDelete - 1);
-		
-		System.out.println("Successfully Deleted");
-		
-		return true;
+		boolean deleted = false;
+		for(int i = 0; i < radioControlCarPartList.size(); i++) {
+			if(radioControlCarPartList.get(i).getAssetTag() == inputRCCPDelete) {
+				radioControlCarPartList.remove(i);
+				deleted = true;
+			}
+		}
+		if(deleted == true) {
+			System.out.println("Successfully Deleted");
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	public static String retrieveRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList) {
 		String output = "";
@@ -209,7 +231,7 @@ public class C206_CaseStudy {
 		return output;
 	}
 	public static void viewRadioControlCarPart() {
-		String output = String.format("%-10s %-20s %-20s %-10s \n", "Asset Tag","Type","Description","Available");
+		String output = String.format("%-10s %-20s %-20s %s \n", "Asset Tag","Type","Description","Available");
 		output += retrieveRadioControlCarPart(radioControlCarPartList);
 		System.out.println(output);
 	}
@@ -252,11 +274,21 @@ public class C206_CaseStudy {
 		return null;
 	}
 	public static boolean setRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList,Integer inputRCCPSet) {
-		radioControlCarPartList.get(inputRCCPSet).setAvailable(false);
-		
-		System.out.println("Successfully Updated");
-		
-		return true;
+		boolean set = false;
+		for(int i = 0; i < radioControlCarPartList.size(); i++) {
+			if(radioControlCarPartList.get(i).getAssetTag() == inputRCCPSet) {
+				radioControlCarPartList.get(i).setAvailable(false);
+				set = true;
+			}
+		}
+		if(set == true) {
+			System.out.println("Successfully Updated");
+			
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	//Appointment Feature
