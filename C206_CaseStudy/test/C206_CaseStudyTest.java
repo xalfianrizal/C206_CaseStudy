@@ -410,7 +410,7 @@ public class C206_CaseStudyTest {
 		//Check if size of feedBackList is 2 after adding in the first feedback
 		assertEquals("Check if the size of feedBackList is 2 after adding in the second feedback", 2, feedBackList.size());
 		
-		//Test Normal | Test if that the two outputs are the same once adding the two objects.
+		//Check that both the outputs are the same - Normal
 		String feedback = C206_CaseStudy.doViewFeedback(feedBackList);
 				
 		String emptyfeedback = String.format("%-15s %-15s %-30s %-10s\n", "Feedback ID", "Customer Name", "Feedback", "Status");
