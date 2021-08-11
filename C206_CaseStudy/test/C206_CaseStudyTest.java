@@ -407,7 +407,7 @@ public class C206_CaseStudyTest {
 		assertEquals("Check if the size of feedBackList is 1 after adding in the first feedback", 1, feedBackList.size());
 		
 		C206_CaseStudy.doAddFeedback(feedBackList, fb2);
-		//Check if size of feedBackList is 2 after adding in the first feedback
+		//Check if size of feedBackList is 2 after adding in the second feedback
 		assertEquals("Check if the size of feedBackList is 2 after adding in the second feedback", 2, feedBackList.size());
 		
 		//Check that both the outputs are the same - Normal
