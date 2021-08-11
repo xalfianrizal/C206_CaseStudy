@@ -45,7 +45,7 @@ public class C206_CaseStudy {
 					if (option == 1) {
 						buyerMenu();
 					} else if (option == 2) {
-						radioControlCarMenu();
+						radioControlCarFeaturesOption();
 					} else if (option == 3) {
 						radioControlCarPartOption();
 					} else if (option == 4) {
@@ -92,14 +92,18 @@ public class C206_CaseStudy {
 	}
 	
 
-	public static void radioControlCarMenu() {
-		Helper.line(30, "=");
-		System.out.println("Radio Control car");
-		Helper.line(30, "=");
-		System.out.println("1. Add Features");
-		System.out.println("2. View Featues");
-		System.out.println("3. Delete Features");
-		System.out.println("4. Quit");
+	public static String radioControlCarMenu() {
+		String output = "";
+		output += String.format("%s\n", "==========================");
+		output += String.format("%s\n","Welcome to Radio Control Car Features Menu");
+		output += String.format("%s\n", "==========================");
+		output += String.format("%s\n","1. Add Radio Control Car Features");
+		output += String.format("%s\n","2. View Radio Control Car Features");
+		output += String.format("%s\n","3. Delete Radio Control Car Features");
+		output += String.format("%s\n","4. Search Radio Control Car Features");
+		output += String.format("%s\n","5. Quit");
+		
+		return output;
 		
 	}
 
@@ -108,7 +112,7 @@ public class C206_CaseStudy {
 		int option = 0;
 		
 		while(option != quit) {
-			radioControlCarMenu();
+			System.out.println(radioControlCarMenu());
 			option = Helper.readInt("Enter an option > ");
 			
 			if(option == 1) {
@@ -119,8 +123,7 @@ public class C206_CaseStudy {
 				viewRadioControlCarFeatures();
 			}
 			else if(option == 3) {
-				int deleteTag = DeleteFeatures();
-				C206_CaseStudy.deleteRadioControlCarFeatures(radioControlCarList, deleteTag);
+				DeleteFeatures();
 			}
 			else if(option == 4) {
 				String search = featuresSearch();
@@ -145,73 +148,60 @@ public class C206_CaseStudy {
 	}
 	
 	
-	private static void addRadioControlCarFeatures(ArrayList<radioControlCar> radioControlCarList,
+	public static void addRadioControlCarFeatures(ArrayList<radioControlCar> radioControlCarList,
 			radioControlCar radioCC) {
 		radioControlCarList.add(radioCC);
 		System.out.println("Successfully Added");
 		
 	}
 
-	
 	public static radioControlCar addFeatures() {
 		String tag = Helper.readString("Enter asset tag > ");
 		String material = Helper.readString("Enter material > ");
 		String name = Helper.readString("Enter name > ");
 		String motorType = Helper.readString("Enter Motor Type > ");
-		double emptyString = Double.parseDouble("");
-		double height = Helper.readDouble("Enter Length > ");
-		double length = Helper.readDouble("Enter Length > ");
 
+		double height = Helper.readDouble("Enter Height > ");
+		double length = Helper.readDouble("Enter Length > ");
 		
-		if(tag.isEmpty() || name.isEmpty() || motorType.isEmpty() || height == emptyString || length == emptyString) {
+		if(tag.isEmpty() || name.isEmpty() || motorType.isEmpty()) {
 			System.out.println("Please fill in the blanks");
 		}
 		else if(checkFeaturesTag(radioControlCarList,Integer.valueOf(tag)) == true) {
 			System.out.println("Asset Tag is not unique!");			
 		}
 		else {
-			radioControlCar RadioCC = new radioControlCar(Integer.valueOf(tag),name , material, motorType, height, length);
+			radioControlCar RadioCC = new radioControlCar(Integer.valueOf(tag),material, name, motorType, height, length);
 			return RadioCC;
 		}
 		return null;
 
 	}
-	
-	public static Integer DeleteFeatures() {
-		viewRadioControlCarPart();
-		String tag = Helper.readString("Enter asset tag to delete > ");
+	//hehe
+	public static void DeleteFeatures() {
+		viewRadioControlCarFeatures();
+		int tag = Helper.readInt("Enter asset tag to delete > ");
 		
-		if(tag.isEmpty()) {
+		if(tag == 0) {
 			System.out.println("Asset Tag is not entered.");
 		}
 		else if(checkFeaturesTag(radioControlCarList,Integer.valueOf(tag)) == false) {
 			System.out.println("No such Asset Tag");
 		}
+
 		else {
-			return Integer.valueOf(tag);
-		}
-		return null;
-	}
-	
-	private static boolean deleteRadioControlCarFeatures(ArrayList<radioControlCar> radioControlCarList, int DeleteFeatures) {
-		boolean deleted = false;
-		for(int i = 0; i < radioControlCarList.size(); i++) {
-			if(radioControlCarList.get(i).getAssetTag() == DeleteFeatures) {
-				radioControlCarList.remove(i);
-				deleted = true;
+			for(int i = 0; i < radioControlCarList.size(); i++) {
+				if(radioControlCarList.get(i).getAssetTag() == tag) {
+					radioControlCarList.remove(i);
+
+				}
 			}
 		}
-		if(deleted == true) {
-			System.out.println("Successfully Deleted");
-			return true;
-		}
-		else {
-			return false;
-		}
-		
+
 	}
 	
-	public static String viewRadioControlCarFeatures(ArrayList<radioControlCar> radioControlCarList) {
+	
+	public static String doViewCarFeatures(ArrayList<radioControlCar> radioControlList) {
 		String output = "";
 		for(int i = 0; i < radioControlCarList.size(); i++) {
 			output += radioControlCarList.get(i).display();
@@ -219,25 +209,12 @@ public class C206_CaseStudy {
 		return output;
 	}
 	
-	
-//	public static boolean searchRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList,String inputRCCPSearch) {
-//		boolean found = false;
-//		String output = String.format("%-10s %-20s %-20s %-10s \n", "Asset Tag","Type","Description","Available");
-//		for(int i = 0; i < radioControlCarPartList.size(); i++) {
-//			if(radioControlCarPartList.get(i).getType().equalsIgnoreCase(inputRCCPSearch)) {
-//				output += radioControlCarPartList.get(i).display();
-//				found = true;
-//			}
-//		}
-//		if(found == true) {
-//			System.out.println(output);
-//			return true;
-//		}
-//		else {
-//			System.out.println("No such Type");
-//			return false;
-//		}
-//	}
+	public static void viewRadioControlCarFeatures() {
+		String output = String.format("%-10s %-20s %-20s %-10s %-10s %-10s %-10s\n", "Asset Tag", "Name", "Material", "Motor Type", "Height", "Length" ,"Available");
+		output += doViewCarFeatures(radioControlCarList);
+		System.out.println(output);
+	}
+
 	
 	public static String featuresSearch() {
 		String search = Helper.readString("Enter the features > ");
@@ -247,9 +224,9 @@ public class C206_CaseStudy {
 	
 	public static boolean searchcarFeatures(ArrayList<radioControlCar> radioControlList,String featuresSearch) {
 		boolean found = false;
-		String output = String.format("%-10s %-20s %-20s %.2f %.2f %s \n", "Asset Tag","Name", "Motor Type", "Height", "Length" ,"Available");
+		String output = String.format("%-10s %-20s %-20s %-10s %-10s %-10s %-10s\n", "Asset Tag", "Name", "Material", "Motor Type", "Height", "Length" ,"Available");
 		for(int i = 0; i < radioControlCarList.size(); i++) {
-			if(radioControlCarPartList.get(i).getType().equalsIgnoreCase(featuresSearch)) {
+			if(radioControlCarList.get(i).getName().equalsIgnoreCase(featuresSearch)) {
 				output += radioControlCarList.get(i).display();
 				found = true;
 			}
@@ -259,18 +236,9 @@ public class C206_CaseStudy {
 			return true;
 		}
 		else {
-			System.out.println("No such features");
+			System.out.println("Radio Control Car not found");
 			return false;
 		}
-	}
-	
-	
-
-	private static void viewRadioControlCarFeatures() {
-		String output = String.format("%-10s %-20s %-20s %.2f %.2f %s \n", "Asset Tag","Name", "Motor Type", "Height", "Length" ,"Available");
-		output += viewRadioControlCarFeatures(radioControlCarList);
-		System.out.println(output);
-		
 	}
 	
 	public static void radioControlCarPartsMenu() {

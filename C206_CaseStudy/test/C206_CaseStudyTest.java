@@ -15,6 +15,12 @@ public class C206_CaseStudyTest {
 	//Admin
 	private adminAccount aA1;
 	
+	
+	private radioControlCar radioCC1;
+	private radioControlCar radioCC2;
+	private ArrayList<radioControlCar> radioControlCarList;
+
+	
 	private ArrayList<adminAccount> adminAccountList;
 	//Appointment
 	private appointment app1;
@@ -34,6 +40,9 @@ public class C206_CaseStudyTest {
 		rCCP2 = new radioControlCarPart(2,"Body Part","SuperLight");
 		
 		radioControlCarPartList = new ArrayList<radioControlCarPart>();
+		
+		radioCC1 = new radioControlCar(1, "Monster Truck", "aluminum", "Brushless", 10.47, 29.92);
+		radioCC2 = 	new radioControlCar(2, "Xray", "Graphite", "T-brace", 9.89, 28.72);
 		
 		//Prepare Test Data
 		aA1 = new adminAccount(1, "admin", "admin123");
@@ -306,6 +315,93 @@ public class C206_CaseStudyTest {
 		assertFalse("Test that only available Asset Tag can set",set);
 	}
 	
+	
+	
+	@Test
+	public void testradioControlCarMenu() {
+		String output = "";
+		output += String.format("%s\n", "==========================");
+		output += String.format("%s\n","Welcome to Radio Control Car Features Menu");
+		output += String.format("%s\n", "==========================");
+		output += String.format("%s\n","1. Add Radio Control Car Features");
+		output += String.format("%s\n","2. View Radio Control Car Features");
+		output += String.format("%s\n","3. Delete Radio Control Car Features");
+		output += String.format("%s\n","4. Search Radio Control Car Features");
+		output += String.format("%s\n","5. Quit");
+		
+		//Test that output have add,view,delete and search 
+		String carFeaturesMenu = C206_CaseStudy.radioControlCarMenu();
+		assertEquals("Check that both menu are the same output", output, carFeaturesMenu);
+		
+		
+		String output1 = "";
+		output1 += String.format("%s\n", "==========================");
+		output1 += String.format("%s\n","Welcome to Radio Control Car Features Menu");
+		output1 += String.format("%s\n", "==========================");
+		output1 += String.format("%s\n","1. Add Radio Control Car Features");
+		output1 += String.format("%s\n","2. View Radio Control Car Features");
+		output1 += String.format("%s\n","3. Delete Radio Control Car Features");
+		output1 += String.format("%s\n","4. Search Radio Control Car Features");
+		
+		//Test that output can display
+		
+		assertNotEquals("Check that both menu are not the same output", output1, carFeaturesMenu);
+		
+	
+	}
+	
+	@Test
+	public void tryAddFeatures() {
+		assertEquals("Test that input is the 1",1, radioCC1.getAssetTag());
+
+		assertSame("Test that Type is the same","Monster Truck",radioCC1.getName());
+		assertSame("Test that Type is the same","aluminum",radioCC1.getMaterial());
+		assertSame("Test that Type is the same","Brushless",radioCC1.getMotorType());
+		
+//		assertSame("Test that radioCC1 is added into radioControlCarList",radioCC1,radioControlCar.get(0));
+//		
+	//	C206_CaseStudy.addRadioControlCarFeatures(radioControlCarList, radioCC2);
+		
+//		radioCC1 = new radioControlCar(1, "Monster Truck", "aluminum", "Brushless", 10.47, 29.92);
+//		
+	}
+	
+
+	
+	@Test
+	public void testDeleteFeatures() {
+		
+//		public static void DeleteFeatures() {
+//			viewRadioControlCarFeatures();
+//			int tag = Helper.readInt("Enter asset tag to delete > ");
+//			
+//			if(tag == 0) {
+//				System.out.println("Asset Tag is not entered.");
+//			}
+//			else if(checkFeaturesTag(radioControlCarList,Integer.valueOf(tag)) == false) {
+//				System.out.println("No such Asset Tag");
+//			}
+//
+//			else {
+//				for(int i = 0; i < radioControlCarList.size(); i++) {
+//					if(radioControlCarList.get(i).getAssetTag() == tag) {
+//						radioControlCarList.remove(i);
+		
+		int tag = 2;
+		boolean equal = false;
+
+		
+		//Test that the admin input to delete tag is the same - normal
+		assertEquals("Test that deleted is same tag", tag, radioCC2.getAssetTag());
+//		assertEquals("Check that the size of radioControlCarList is 1 after removing the first feedback", 2, radioControlCarList.size());
+		
+//
+//		radioControlCarList.remove(0);
+//		delete = C206_CaseStudy.doDeleteFeedback(radioControlCarList, fb1.getFeedBackID());
+
+		
+	}
+	
 	@Test
 	public void testViewFeedbackMenu() {
 		String menu = "";
@@ -437,6 +533,9 @@ public class C206_CaseStudyTest {
 		fb1 = null;
 		fb2 = null;
 		feedBackList = null;
+		
+		radioCC1 = null;
+		radioCC2 = null;
 		
 	}
 	

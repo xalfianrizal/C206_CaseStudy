@@ -71,7 +71,7 @@ public class radioControlCar {
 	}
 	public String display() {
 		String output = "";
-		output += String.format("%-10d %-20s %-20s %-10s %-10.2f %-10.2f %-10s %", assetTag,name,material,motorType,height,length,showAvailability(isAvailable));
+		output += String.format("%-10d %-20s %-20s %-10s %-10.2f %-10.2f %-10s \n", assetTag,name,material,motorType,height,length,showAvailability(isAvailable));
 		
 		return output;
 	}
