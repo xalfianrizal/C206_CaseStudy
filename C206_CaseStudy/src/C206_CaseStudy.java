@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class C206_CaseStudy {
-
+//hehehe
 	private static final int QUIT = 6; // Change when done
 
 	private static final ArrayList<buyer> buyerList = new ArrayList<buyer>();
@@ -90,14 +90,194 @@ public class C206_CaseStudy {
 	public static void buyerMenu() {
 
 	}
+	
 
 	public static void radioControlCarMenu() {
+		Helper.line(30, "=");
+		System.out.println("Radio Control car");
+		Helper.line(30, "=");
+		System.out.println("1. Add Features");
+		System.out.println("2. View Featues");
+		System.out.println("3. Delete Features");
+		System.out.println("4. Quit");
+		
 	}
 
+	public static void radioControlCarFeaturesOption() {
+		int quit = 5;
+		int option = 0;
+		
+		while(option != quit) {
+			radioControlCarMenu();
+			option = Helper.readInt("Enter an option > ");
+			
+			if(option == 1) {
+			radioControlCar RadioCC = addFeatures();
+			C206_CaseStudy.addRadioControlCarFeatures(radioControlCarList, RadioCC);
+			}
+			else if(option == 2) {
+				viewRadioControlCarFeatures();
+			}
+			else if(option == 3) {
+				int deleteTag = DeleteFeatures();
+				C206_CaseStudy.deleteRadioControlCarFeatures(radioControlCarList, deleteTag);
+			}
+			else if(option == 4) {
+				String search = featuresSearch();
+				C206_CaseStudy.searchcarFeatures(radioControlCarList,search);
+			}
+			else if(option == 5) {
+				System.out.println("Successfully Exited Radio Control Car Features Menu");
+			}
+			else {
+				System.out.println("Invalid Option!");
+			}
+		}
+	}
+
+	public static boolean checkFeaturesTag(ArrayList<radioControlCar> radioControlCarList,int tag) {
+		for(int i = 0; i < radioControlCarList.size(); i++) {
+			if(radioControlCarList.get(i).getAssetTag() == tag) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	private static void addRadioControlCarFeatures(ArrayList<radioControlCar> radioControlCarList,
+			radioControlCar radioCC) {
+		radioControlCarList.add(radioCC);
+		System.out.println("Successfully Added");
+		
+	}
+
+	
+	public static radioControlCar addFeatures() {
+		String tag = Helper.readString("Enter asset tag > ");
+		String material = Helper.readString("Enter material > ");
+		String name = Helper.readString("Enter name > ");
+		String motorType = Helper.readString("Enter Motor Type > ");
+		double emptyString = Double.parseDouble("");
+		double height = Helper.readDouble("Enter Length > ");
+		double length = Helper.readDouble("Enter Length > ");
+
+		
+		if(tag.isEmpty() || name.isEmpty() || motorType.isEmpty() || height == emptyString || length == emptyString) {
+			System.out.println("Please fill in the blanks");
+		}
+		else if(checkFeaturesTag(radioControlCarList,Integer.valueOf(tag)) == true) {
+			System.out.println("Asset Tag is not unique!");			
+		}
+		else {
+			radioControlCar RadioCC = new radioControlCar(Integer.valueOf(tag),name , material, motorType, height, length);
+			return RadioCC;
+		}
+		return null;
+
+	}
+	
+	public static Integer DeleteFeatures() {
+		viewRadioControlCarPart();
+		String tag = Helper.readString("Enter asset tag to delete > ");
+		
+		if(tag.isEmpty()) {
+			System.out.println("Asset Tag is not entered.");
+		}
+		else if(checkFeaturesTag(radioControlCarList,Integer.valueOf(tag)) == false) {
+			System.out.println("No such Asset Tag");
+		}
+		else {
+			return Integer.valueOf(tag);
+		}
+		return null;
+	}
+	
+	private static boolean deleteRadioControlCarFeatures(ArrayList<radioControlCar> radioControlCarList, int DeleteFeatures) {
+		boolean deleted = false;
+		for(int i = 0; i < radioControlCarList.size(); i++) {
+			if(radioControlCarList.get(i).getAssetTag() == DeleteFeatures) {
+				radioControlCarList.remove(i);
+				deleted = true;
+			}
+		}
+		if(deleted == true) {
+			System.out.println("Successfully Deleted");
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	public static String viewRadioControlCarFeatures(ArrayList<radioControlCar> radioControlCarList) {
+		String output = "";
+		for(int i = 0; i < radioControlCarList.size(); i++) {
+			output += radioControlCarList.get(i).display();
+		}
+		return output;
+	}
+	
+	
+//	public static boolean searchRadioControlCarPart(ArrayList<radioControlCarPart> radioControlCarPartList,String inputRCCPSearch) {
+//		boolean found = false;
+//		String output = String.format("%-10s %-20s %-20s %-10s \n", "Asset Tag","Type","Description","Available");
+//		for(int i = 0; i < radioControlCarPartList.size(); i++) {
+//			if(radioControlCarPartList.get(i).getType().equalsIgnoreCase(inputRCCPSearch)) {
+//				output += radioControlCarPartList.get(i).display();
+//				found = true;
+//			}
+//		}
+//		if(found == true) {
+//			System.out.println(output);
+//			return true;
+//		}
+//		else {
+//			System.out.println("No such Type");
+//			return false;
+//		}
+//	}
+	
+	public static String featuresSearch() {
+		String search = Helper.readString("Enter the features > ");
+		
+		return search;
+	}
+	
+	public static boolean searchcarFeatures(ArrayList<radioControlCar> radioControlList,String featuresSearch) {
+		boolean found = false;
+		String output = String.format("%-10s %-20s %-20s %.2f %.2f %s \n", "Asset Tag","Name", "Motor Type", "Height", "Length" ,"Available");
+		for(int i = 0; i < radioControlCarList.size(); i++) {
+			if(radioControlCarPartList.get(i).getType().equalsIgnoreCase(featuresSearch)) {
+				output += radioControlCarList.get(i).display();
+				found = true;
+			}
+		}
+		if(found == true) {
+			System.out.println(output);
+			return true;
+		}
+		else {
+			System.out.println("No such features");
+			return false;
+		}
+	}
+	
+	
+
+	private static void viewRadioControlCarFeatures() {
+		String output = String.format("%-10s %-20s %-20s %.2f %.2f %s \n", "Asset Tag","Name", "Motor Type", "Height", "Length" ,"Available");
+		output += viewRadioControlCarFeatures(radioControlCarList);
+		System.out.println(output);
+		
+	}
+	
 	public static void radioControlCarPartsMenu() {
 
 		
 	}
+	
 	public static adminAccount inputAdmin() {
 		int iD = Helper.readInt("Enter an ID > ");
 		String username = Helper.readString("Enter an username > ");
